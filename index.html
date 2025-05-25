@@ -3,252 +3,222 @@
 <head>
   <meta charset="UTF-8">
   <link rel="icon" href="icon.png">
-  <title>Estimativa de Licenças</title>
+  <title>Cálculo Valor Mensal de Licenças</title>
   <style>
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f7;
-    color: #333;
-    padding: 20px;
-    margin: 0;
-    position: relative;
-  }
-
-  h2, h3 {
-    color: #333;
-  }
-
-  .btn-top-right {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: #fff;
-    border: 2px solid #7c3aed;
-    box-shadow: 0px 4px 10px rgba(124, 58, 237, 0.3);
-    margin-top: 20px;
-  }
-
-  th, td {
-    border: 1px solid #d1c4e9;
-    padding: 12px;
-    text-align: center;
-    font-size: 15px;
-  }
-
-  thead th {
-    background-color: #7c3aed;
-    color: white;
-    font-weight: bold;
-    font-size: 16px;
-  }
-
-  tfoot td {
-    background-color: #ede9fe;
-    font-weight: bold;
-    color: #5b21b6;
-  }
-
-  tbody td {
-    background-color: white;
-  }
-
-  input {
-    width: 100%;
-    max-width: 80px;
-    padding: 6px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    text-align: center;
-    box-sizing: border-box;
-  }
-
-  button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #7c3aed;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-
-  button:hover {
-    background-color: #5b21b6;
-  }
-
-  .danger {
-    color: #5b21b6;
-    font-weight: bold;
-    margin-top: 15px;
-    font-size: 16px;
-  }
-
-  .rational {
-    background-color: #e5e7eb;
-    padding: 15px;
-    margin-top: 20px;
-    font-size: 15px;
-    border-radius: 8px;
-    box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
-  }
-
-  /* Responsividade para dispositivos móveis */
-  @media (max-width: 768px) {
+    /* Estilos combinados dos dois blocos - deixei os principais */
     body {
-      padding: 10px;
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f7;
+      color: #333;
+      padding: 20px;
+      margin: 0;
     }
 
-    table, thead, tbody, th, td, tr {
-      display: block;
+    h2, h3 {
+      color: #333;
     }
 
-    thead tr {
-      display: none;
-    }
-
-    td {
-      position: relative;
-      padding-left: 50%;
-      text-align: left;
-      border: none;
-      border-bottom: 1px solid #d1c4e9;
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
       background-color: #fff;
+      border: 2px solid #7c3aed;
+      box-shadow: 0px 4px 10px rgba(124, 58, 237, 0.3);
     }
 
-    td::before {
-      content: attr(data-label);
-      position: absolute;
-      left: 10px;
-      top: 10px;
+    th, td {
+      border: 1px solid #d1c4e9;
+      padding: 12px;
+      text-align: center;
+      font-size: 15px;
+    }
+
+    thead th {
+      background-color: #7c3aed;
+      color: white;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    input {
+      width: 80px;
+      padding: 6px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #7c3aed;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .danger {
+      color: #5b21b6;
+      font-weight: bold;
+      margin-top: 15px;
+      font-size: 16px;
+    }
+
+    .rational {
+      background-color: #e5e7eb;
+      padding: 15px;
+      margin-top: 20px;
+      font-size: 15px;
+      border-radius: 8px;
+    }
+
+    .highlight {
       font-weight: bold;
       color: #7c3aed;
     }
 
-    input {
-      width: 100%;
-      margin-top: 5px;
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
     }
 
-    button {
-      width: 100%;
+    .table-section {
+      flex: 1;
+      min-width: 300px;
     }
-
-    .rational {
-      font-size: 14px;
-    }
-
-    .btn-top-right {
-      position: static;
-      margin-top: 10px;
-      width: 100%;
-    }
-  }
   </style>
 </head>
 <body>
 
-  <!-- Botão no canto superior direito -->
-  <a href="https://valormensal.vercel.app/" class="btn-top-right">
-    <button>Valor Mensal de Licenças</button>
-  </a>
+<h2>Estimativa de Licenças</h2>
 
-  <h2>Estimativa de Licenças</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Produto</th>
+      <th>GB/Dia</th>
+      <th>Eventos/Dia</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Logs</td>
+      <td><input type="number" id="logsGB" value="0"></td>
+      <td><input type="number" id="logsEventos" value="0"></td>
+    </tr>
+  </tbody>
+</table>
 
-  <table>
-    <thead>
-      <tr>
-        <th rowspan="2">Produto</th>
-        <th colspan="2">Log</th>
-        <th colspan="3">Métrica Customizada</th>
-        <th colspan="2">Projeção</th>
-      </tr>
-      <tr>
-        <th>GB/Dia</th>
-        <th>Eventos/Dia</th>
-        <th>Métricas</th>
-        <th>Tags/Dimensões</th>
-        <th>Agregações</th>
-        <th>Ingestão/Mês</th>
-        <th>Indexação/Mês</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr class="section-title">
-        <td data-label="Produto">Logs</td>
-        <td data-label="GB/Dia"><input type="number" id="logsGB" value="0"></td>
-        <td data-label="Eventos/Dia"><input type="number" id="logsEventos" value="0"></td>
-        <td data-label="Métricas" colspan="3">-</td>
-        <td data-label="Ingestão/Mês" id="ingestaoMesLogs">0</td>
-        <td data-label="Indexação/Mês" id="indexacaoMesLogs">0</td>
-      </tr>
-      <tr class="section-title">
-        <td data-label="Produto">Métricas</td>
-        <td data-label="GB/Dia" colspan="2">-</td>
-        <td data-label="Métricas"><input type="number" id="metricas" value="0"></td>
-        <td data-label="Tags/Dimensões"><input type="number" id="tags" value="0"></td>
-        <td data-label="Agregações"><input type="number" id="agregacoes" value="0"></td>
-        <td data-label="Ingestão/Mês" colspan="3" id="ingestaoMesMetricas">0</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <h3>Licenças</h3>
-  <div id="licencasLogs" class="danger">0 Licenças de Ingestão / 0 Licenças de Retenção</div>
-  <div id="licencasMetricas" class="danger">0 Infrastructure PRO / 0 Infrastructure Enterprise</div>
-  
-  <button onclick="calcular()">Calcular</button>
-  
-  <div class="rational" id="racional">
-    <!-- Resultado aparece aqui -->
+<h3>Licenças</h3>
+<div id="licencasLogs" class="danger">0 Licenças de Ingestão / 0 Licenças de Retenção</div>
+
+<button onclick="calcular()">Calcular</button>
+
+<div class="rational" id="racional">
+  <!-- Resultado aparece aqui -->
+</div>
+
+<!-- Segunda parte: cálculo em dólar -->
+<h2>Cálculo Valor Mensal de Licenças</h2>
+
+<p>
+  <strong>Cotação Dólar:</strong>
+  R$ <input type="number" id="cotacao" value="5.50" step="0.01" onchange="calcular()">
+</p>
+
+<div class="container">
+  <div class="table-section">
+    <table>
+      <thead>
+        <tr>
+          <th class="left">Licença</th>
+          <th>Valor Unit ($)</th>
+          <th>Qtde</th>
+          <th>Mensal ($)</th>
+          <th>Total Mensal em Real (R$)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="left">Ingestão</td>
+          <td id="valorUnit1">0.14</td>
+          <td><input type="number" id="qtde1" value="0" class="input-small" onchange="calcular()"></td>
+          <td id="mensal1">-</td>
+          <td id="totalReal1" class="highlight">-</td>
+        </tr>
+        <tr>
+          <td class="left">Indexação (retenção) 3 dias</td>
+          <td id="valorUnit2">1.06</td>
+          <td><input type="number" id="qtde2" value="0" class="input-small" onchange="calcular()"></td>
+          <td id="mensal2">-</td>
+          <td id="totalReal2" class="highlight">-</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th colspan="4" class="left">Total</th>
+          <th id="totalGeral" class="highlight">-</th>
+        </tr>
+      </tfoot>
+    </table>
   </div>
-    
+</div>
+
 <script>
 function calcular() {
   const logsGB = parseFloat(document.getElementById('logsGB').value) || 0;
   const logsEventos = parseFloat(document.getElementById('logsEventos').value) || 0;
-  const metricas = parseInt(document.getElementById('metricas').value) || 0;
-  const tags = parseInt(document.getElementById('tags').value) || 0;
-  const agregacoes = parseInt(document.getElementById('agregacoes').value) || 0;
 
-  // Ingestão/Indexação de Logs
-  const ingestaoMesLogs = logsGB * 30; // 30 dias
-  const indexacaoMesLogs = logsEventos * 30; // 30 dias
+  const ingestaoMesLogs = logsGB * 30;
+  const indexacaoMesLogs = logsEventos * 30;
 
-  document.getElementById('ingestaoMesLogs').innerText = ingestaoMesLogs;
-  document.getElementById('indexacaoMesLogs').innerText = indexacaoMesLogs;
+  const licencasIngestao = Math.ceil(ingestaoMesLogs);
+  const licencasRetencao = Math.ceil(indexacaoMesLogs / 1000000);
 
-  // Ingestão de Métricas (corrigido! SEM x30)
-  const ingestaoMesMetricas = metricas * tags * agregacoes;
-  document.getElementById('ingestaoMesMetricas').innerText = ingestaoMesMetricas;
-
-  // Licenças de Logs
-  const licencasIngestao = Math.ceil(ingestaoMesLogs) + " Licenças de Ingestão";
-  const licencasRetencao = Math.ceil(indexacaoMesLogs / 1000000) + " Licenças de Retenção";
-
-  // Licenças de Métricas
-  const infraPro = Math.ceil(ingestaoMesMetricas / 100) + " Infrastructure PRO";
-  const infraEnterprise = Math.ceil(ingestaoMesMetricas / 200) + " Infrastructure Enterp.";
-
-  document.getElementById('licencasLogs').innerText = `${licencasIngestao} / ${licencasRetencao}`;
-  document.getElementById('licencasMetricas').innerText = `${infraPro} / ${infraEnterprise}`;
+  // Atualiza primeira seção
+  document.getElementById('licencasLogs').innerText = `${licencasIngestao} Licenças de Ingestão / ${licencasRetencao} Licenças de Retenção`;
 
   document.getElementById('racional').innerHTML = `
     <strong>Resumo:</strong><br>
     - Ingestão Logs: ${logsGB} GB/dia × 30 = ${ingestaoMesLogs} GB/mês<br>
-    - Eventos Logs: ${logsEventos} eventos/dia × 30 = ${indexacaoMesLogs} eventos/mês<br>
-    - Ingestão Métricas: ${metricas} métricas × ${tags} tags × ${agregacoes} agregações = ${ingestaoMesMetricas} métricas/mês<br><br>
-    - <strong>Licenças:</strong> ${licencasIngestao}, ${licencasRetencao}, ${infraPro}, ${infraEnterprise}
+    - Eventos Logs: ${logsEventos} eventos/dia × 30 = ${indexacaoMesLogs} eventos/mês<br><br>
+    - <strong>Licenças: </strong> ${licencasIngestao} Licenças de Ingestão, ${licencasRetencao} Licenças de Retenção
   `;
+
+  // ✅ Só preenche os inputs com os valores sugeridos, mas NÃO usa eles para cálculo diretamente
+  document.getElementById('qtde1').value = licencasIngestao;
+  document.getElementById('qtde2').value = licencasRetencao;
+
+  // ✅ Aqui começa a lógica original de cálculo financeiro, SEM ALTERAÇÃO
+  const cotacao = parseFloat(document.getElementById('cotacao').value);
+
+  const mensal1 = parseFloat(document.getElementById('qtde1').value) || 0;
+  const totalReal1 = mensal1 * cotacao;
+
+  document.getElementById('mensal1').innerText = mensal1
+    ? mensal1.toLocaleString('pt-BR', { minimumFractionDigits: 2 }) : '-';
+  document.getElementById('totalReal1').innerText = totalReal1
+    ? totalReal1.toLocaleString('pt-BR', { minimumFractionDigits: 2 }) : '-';
+
+  const mensal2 = parseFloat(document.getElementById('qtde2').value) || 0;
+  const totalReal2 = mensal2 * cotacao;
+
+  document.getElementById('mensal2').innerText = mensal2
+    ? mensal2.toLocaleString('pt-BR', { minimumFractionDigits: 2 }) : '-';
+  document.getElementById('totalReal2').innerText = totalReal2
+    ? totalReal2.toLocaleString('pt-BR', { minimumFractionDigits: 2 }) : '-';
+
+  const totalGeral = totalReal1 + totalReal2;
+  document.getElementById('totalGeral').innerText = totalGeral
+    ? totalGeral.toLocaleString('pt-BR', { minimumFractionDigits: 2 }) : '-';
 }
 </script>
 
+
 </body>
 </html>
-
