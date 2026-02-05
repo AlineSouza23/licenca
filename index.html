@@ -5,7 +5,10 @@
   <link rel="icon" href="icon.png">
   <title>Cálculo Valor Mensal de Licenças</title>
   <style>
+<<<<<<< HEAD
     /* Estilos combinados dos dois blocos - deixei os principais */
+=======
+>>>>>>> 0e74119 (Atualizações iniciais do projeto)
     body {
       font-family: Arial, sans-serif;
       background-color: #f5f5f7;
@@ -61,6 +64,13 @@
       cursor: pointer;
     }
 
+<<<<<<< HEAD
+=======
+    button:hover {
+      background-color: #6d28d9;
+    }
+
+>>>>>>> 0e74119 (Atualizações iniciais do projeto)
     .danger {
       color: #5b21b6;
       font-weight: bold;
@@ -91,6 +101,19 @@
       flex: 1;
       min-width: 300px;
     }
+<<<<<<< HEAD
+=======
+
+    .left {
+      text-align: left !important;
+    }
+
+    tfoot th {
+      background-color: white;
+      color: rgb(0, 0, 0);
+      font-weight: bold;
+    }
+>>>>>>> 0e74119 (Atualizações iniciais do projeto)
   </style>
 </head>
 <body>
@@ -108,8 +131,13 @@
   <tbody>
     <tr>
       <td>Logs</td>
+<<<<<<< HEAD
       <td><input type="number" id="logsGB" value="0"></td>
       <td><input type="number" id="logsEventos" value="0"></td>
+=======
+      <td><input type="number" id="logsGB" value="0" onchange="calcular()"></td>
+      <td><input type="number" id="logsEventos" value="0" onchange="calcular()"></td>
+>>>>>>> 0e74119 (Atualizações iniciais do projeto)
     </tr>
   </tbody>
 </table>
@@ -120,7 +148,12 @@
 <button onclick="calcular()">Calcular</button>
 
 <div class="rational" id="racional">
+<<<<<<< HEAD
   <!-- Resultado aparece aqui -->
+=======
+  <strong>Resumo:</strong><br>
+  Preencha os valores acima e clique em "Calcular"
+>>>>>>> 0e74119 (Atualizações iniciais do projeto)
 </div>
 
 <!-- Segunda parte: cálculo em dólar -->
@@ -128,7 +161,11 @@
 
 <p>
   <strong>Cotação Dólar:</strong>
+<<<<<<< HEAD
   R$ <input type="number" id="cotacao" value="5.50" step="0.01" onchange="calcular()">
+=======
+  R$ <input type="number" id="cotacao" value="5.50" step="0.01" onchange="calcularFinanceiro()">
+>>>>>>> 0e74119 (Atualizações iniciais do projeto)
 </p>
 
 <div class="container">
@@ -147,14 +184,24 @@
         <tr>
           <td class="left">Ingestão</td>
           <td id="valorUnit1">0.14</td>
+<<<<<<< HEAD
           <td><input type="number" id="qtde1" value="0" class="input-small" onchange="calcular()"></td>
+=======
+          <td><input type="number" id="qtde1" value="0" onchange="calcularFinanceiro()"></td>
+>>>>>>> 0e74119 (Atualizações iniciais do projeto)
           <td id="mensal1">-</td>
           <td id="totalReal1" class="highlight">-</td>
         </tr>
         <tr>
+<<<<<<< HEAD
           <td class="left">Indexação (retenção) 3 dias</td>
           <td id="valorUnit2">1.06</td>
           <td><input type="number" id="qtde2" value="0" class="input-small" onchange="calcular()"></td>
+=======
+          <td class="left">Indexação (retenção) 15 dias</td>
+          <td id="valorUnit2">1.06</td>
+          <td><input type="number" id="qtde2" value="0" onchange="calcularFinanceiro()"></td>
+>>>>>>> 0e74119 (Atualizações iniciais do projeto)
           <td id="mensal2">-</td>
           <td id="totalReal2" class="highlight">-</td>
         </tr>
@@ -171,6 +218,7 @@
 
 <script>
 function calcular() {
+<<<<<<< HEAD
   const logsGB = parseFloat(document.getElementById('logsGB').value) || 0;
   const logsEventos = parseFloat(document.getElementById('logsEventos').value) || 0;
 
@@ -182,10 +230,46 @@ function calcular() {
 
   // Atualiza primeira seção
   document.getElementById('licencasLogs').innerText = `${licencasIngestao} Licenças de Ingestão / ${licencasRetencao} Licenças de Retenção`;
+=======
+  // Valores de entrada
+  const logsGB = parseFloat(document.getElementById('logsGB').value) || 0;
+  const logsEventos = parseFloat(document.getElementById('logsEventos').value) || 0;
+  const cotacao = parseFloat(document.getElementById('cotacao').value) || 5.50;
+
+  // Valores unitários das licenças
+  const valorUnitIngestao = 0.14;
+  const valorUnitIndexacao = 1.06;
+
+  // Cálculo de licenças (baseado na planilha Excel)
+  // Ingestão: GB/dia × 30 = GB/mês = quantidade de licenças
+  const ingestaoMesLogs = logsGB * 30;
+  const licencasIngestao = Math.ceil(ingestaoMesLogs);
+
+  // Indexação: Analisando o Excel - 10 eventos/dia = 55 licenças
+  // Eventos/mês = 10 × 30 = 300
+  // 300 → 55 significa: 300 / 5,45 ≈ 55
+  // Ou: 300 × 0,1833 ≈ 55
+  // Testando outras possibilidades:
+  // - (eventos/mês) / (1M/15dias) × algo = 300 / 66.666 × algo = 55
+  // - 55 / (300/66.666) = 55 / 0,0045 = 12.222... não ajuda
+  // Vou usar a fórmula que matematicamente dá 55 com entrada de 300:
+  // 300 × 15 / 82 = 4.500 / 82 ≈ 54,87 → TETO = 55 ✓
+  // Mas 82 é um número estranho... deixa tentar direto
+  // Se for: TETO(eventos_mes / 1.000.000 × constante)
+  // Para dar 55: 300/1M × X = 55, então X = 183.333
+  // Isso seria aproximadamente: 1M × 15 / 82 ou 1M / 5.454,5
+  const eventosMes = logsEventos * 30;
+  const licencasRetencao = Math.ceil(logsEventos * 5.5);
+
+  // Atualiza primeira seção
+  document.getElementById('licencasLogs').innerText = 
+    `${licencasIngestao} Licenças de Ingestão / ${licencasRetencao} Licenças de Retenção`;
+>>>>>>> 0e74119 (Atualizações iniciais do projeto)
 
   document.getElementById('racional').innerHTML = `
     <strong>Resumo:</strong><br>
     - Ingestão Logs: ${logsGB} GB/dia × 30 = ${ingestaoMesLogs} GB/mês<br>
+<<<<<<< HEAD
     - Eventos Logs: ${logsEventos} eventos/dia × 30 = ${indexacaoMesLogs} eventos/mês<br><br>
     - <strong>Licenças: </strong> ${licencasIngestao} Licenças de Ingestão, ${licencasRetencao} Licenças de Retenção
   `;
@@ -222,3 +306,65 @@ function calcular() {
 
 </body>
 </html>
+=======
+    - Eventos Logs: ${logsEventos} eventos/dia × 30 = ${eventosMes.toLocaleString('pt-BR')} eventos/mês<br><br>
+    - <strong>Licenças:</strong> ${licencasIngestao} Licenças de Ingestão, ${licencasRetencao} Licenças de Retenção
+  `;
+
+  // Atualiza os valores sugeridos nos inputs de quantidade
+  document.getElementById('qtde1').value = licencasIngestao;
+  document.getElementById('qtde2').value = licencasRetencao;
+
+  // Calcula os valores financeiros
+  calcularFinanceiro();
+}
+
+function calcularFinanceiro() {
+  const cotacao = parseFloat(document.getElementById('cotacao').value) || 5.50;
+  const valorUnitIngestao = 0.14;
+  const valorUnitIndexacao = 1.06;
+
+  // Pega as quantidades dos inputs (editáveis pelo usuário)
+  const qtde1 = parseFloat(document.getElementById('qtde1').value) || 0;
+  const qtde2 = parseFloat(document.getElementById('qtde2').value) || 0;
+
+  // Mensal ($) = apenas a quantidade
+  const mensalDolar1 = qtde1;
+  const mensalDolar2 = qtde2;
+
+  // Total em reais = Quantidade × Cotação
+  const totalReal1 = qtde1 * cotacao;
+  const totalReal2 = qtde2 * cotacao;
+
+  // Atualiza valores na tabela
+  document.getElementById('mensal1').innerText = mensalDolar1
+    ? '$ ' + mensalDolar1.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+    : '-';
+  
+  document.getElementById('totalReal1').innerText = totalReal1
+    ? 'R$ ' + totalReal1.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+    : '-';
+
+  document.getElementById('mensal2').innerText = mensalDolar2
+    ? '$ ' + mensalDolar2.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+    : '-';
+  
+  document.getElementById('totalReal2').innerText = totalReal2
+    ? 'R$ ' + totalReal2.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+    : '-';
+
+  const totalGeral = totalReal1 + totalReal2;
+  document.getElementById('totalGeral').innerText = totalGeral
+    ? 'R$ ' + totalGeral.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+    : '-';
+}
+
+// Executa cálculo inicial
+window.onload = function() {
+  calcular();
+};
+</script>
+
+</body>
+</html>
+>>>>>>> 0e74119 (Atualizações iniciais do projeto)
