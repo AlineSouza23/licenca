@@ -154,6 +154,7 @@
           <th>Valor Unit ($)</th>
           <th>Qtde</th>
           <th>Mensal ($)</th>
+          <th>Total Mensal Dólar ($)</th>
           <th>Total Mensal em Real (R$)</th>
         </tr>
       </thead>
@@ -163,6 +164,7 @@
           <td id="valorUnit1">0.14</td>
           <td><input type="number" id="qtde1" value="0" onchange="calcularFinanceiro()"></td>
           <td id="mensal1">-</td>
+          <td id="totalDolar1" class="highlight">-</td>
           <td id="totalReal1" class="highlight">-</td>
         </tr>
         <tr>
@@ -170,12 +172,14 @@
           <td id="valorUnit2">1.06</td>
           <td><input type="number" id="qtde2" value="0" onchange="calcularFinanceiro()"></td>
           <td id="mensal2">-</td>
+          <td id="totalDolar2" class="highlight">-</td>
           <td id="totalReal2" class="highlight">-</td>
         </tr>
       </tbody>
       <tfoot>
         <tr>
           <th colspan="4" class="left">Total</th>
+          <th id="totalGeralDolar" class="highlight">-</th>
           <th id="totalGeral" class="highlight">-</th>
         </tr>
       </tfoot>
@@ -243,17 +247,25 @@ function calcularFinanceiro() {
   const qtde1 = parseFloat(document.getElementById('qtde1').value) || 0;
   const qtde2 = parseFloat(document.getElementById('qtde2').value) || 0;
 
-  // Mensal ($) = apenas a quantidade
-  const mensalDolar1 = qtde1;
-  const mensalDolar2 = qtde2;
+  // Mensal ($) = Quantidade × Valor Unitário
+  const mensalDolar1 = qtde1 * valorUnitIngestao;
+  const mensalDolar2 = qtde2 * valorUnitIndexacao;
 
-  // Total em reais = Quantidade × Cotação
-  const totalReal1 = qtde1 * cotacao;
-  const totalReal2 = qtde2 * cotacao;
+  // Total em dólares (mesmo valor que mensal, mas em coluna separada)
+  const totalDolar1 = mensalDolar1;
+  const totalDolar2 = mensalDolar2;
+
+  // Total em reais = Mensal ($) × Cotação
+  const totalReal1 = mensalDolar1 * cotacao;
+  const totalReal2 = mensalDolar2 * cotacao;
 
   // Atualiza valores na tabela
   document.getElementById('mensal1').innerText = mensalDolar1
     ? '$ ' + mensalDolar1.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+    : '-';
+  
+  document.getElementById('totalDolar1').innerText = totalDolar1
+    ? '$ ' + totalDolar1.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
     : '-';
   
   document.getElementById('totalReal1').innerText = totalReal1
@@ -264,11 +276,21 @@ function calcularFinanceiro() {
     ? '$ ' + mensalDolar2.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
     : '-';
   
+  document.getElementById('totalDolar2').innerText = totalDolar2
+    ? '$ ' + totalDolar2.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+    : '-';
+  
   document.getElementById('totalReal2').innerText = totalReal2
     ? 'R$ ' + totalReal2.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
     : '-';
 
+  const totalGeralDolar = totalDolar1 + totalDolar2;
   const totalGeral = totalReal1 + totalReal2;
+  
+  document.getElementById('totalGeralDolar').innerText = totalGeralDolar
+    ? '$ ' + totalGeralDolar.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+    : '-';
+  
   document.getElementById('totalGeral').innerText = totalGeral
     ? 'R$ ' + totalGeral.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
     : '-';
