@@ -115,7 +115,7 @@
     <tr>
       <th>Produto</th>
       <th>GB/Dia</th>
-      <th>Eventos/Dia</th>
+      <th>Milhões de eventos/Dia</th>
     </tr>
   </thead>
   <tbody>
@@ -160,15 +160,15 @@
       <tbody>
         <tr>
           <td class="left">Ingestão</td>
-          <td id="valorUnit1">0.14</td>
-          <td><input type="number" id="qtde1" value="0" onchange="calcularFinanceiro()"></td>
+          <td id="valorUnit1">0.10</td>
+          <td><input type="number" id="qtde1" value="30" onchange="calcularFinanceiro()"></td>
           <td id="totalDolar1" class="highlight">-</td>
           <td id="totalReal1" class="highlight">-</td>
         </tr>
         <tr>
-          <td class="left">Indexação (retenção) 15 dias</td>
-          <td id="valorUnit2">1.06</td>
-          <td><input type="number" id="qtde2" value="0" onchange="calcularFinanceiro()"></td>
+          <td class="left">Indexação (retenção) 3 dias</td>
+          <td id="valorUnit2">0.85</td>
+          <td><input type="number" id="qtde2" value="30" onchange="calcularFinanceiro()"></td>
           <td id="totalDolar2" class="highlight">-</td>
           <td id="totalReal2" class="highlight">-</td>
         </tr>
@@ -191,9 +191,9 @@ function calcular() {
   const logsEventos = parseFloat(document.getElementById('logsEventos').value) || 0;
   const cotacao = parseFloat(document.getElementById('cotacao').value) || 5.50;
 
-  // Valores unitários das licenças
-  const valorUnitIngestao = 0.14;
-  const valorUnitIndexacao = 1.06;
+  // Valores unitários das licenças (novos valores do contrato AWS)
+  const valorUnitIngestao = 0.10;
+  const valorUnitIndexacao = 0.85;
 
   // Cálculo de licenças (baseado na planilha Excel)
   // Ingestão: GB/dia × 30 = GB/mês = quantidade de licenças
@@ -223,7 +223,7 @@ function calcular() {
   document.getElementById('racional').innerHTML = `
     <strong>Resumo:</strong><br>
     - Ingestão Logs: ${logsGB} GB/dia × 30 = ${ingestaoMesLogs} GB/mês<br>
-    - Eventos Logs: ${logsEventos} eventos/dia × 30 = ${eventosMes.toLocaleString('pt-BR')} eventos/mês<br><br>
+    - Eventos Logs: ${logsEventos} milhões de eventos/dia × 30 = ${eventosMes.toLocaleString('pt-BR')} milhões de eventos/mês<br><br>
     - <strong>Licenças:</strong> ${licencasIngestao} Licenças de Ingestão, ${licencasRetencao} Licenças de Retenção
   `;
 
@@ -237,8 +237,8 @@ function calcular() {
 
 function calcularFinanceiro() {
   const cotacao = parseFloat(document.getElementById('cotacao').value) || 5.50;
-  const valorUnitIngestao = 0.14;
-  const valorUnitIndexacao = 1.06;
+  const valorUnitIngestao = 0.10;
+  const valorUnitIndexacao = 0.85;
 
   // Pega as quantidades dos inputs (editáveis pelo usuário)
   const qtde1 = parseFloat(document.getElementById('qtde1').value) || 0;
